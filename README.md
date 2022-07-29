@@ -5,6 +5,8 @@ This is a free course and can be found here [freecodecamp.org](https://www.freec
 Jack Herrington created this course.
 
 
-## **Steps**
+## **Notes**
 
-- npx create-mf-app  
+- npx create-mf-app 
+- remoteEntry.js
+- PORT=3000 npx servor
