@@ -1,22 +1,19 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import "./index.scss";
-import "tailwindcss/dist/tailwind.min.css";
 import "remixicon/fonts/remixicon.css";
+import "./index.scss";
 
-import Footer from "./Footer";
-import Header from "./Header";
-import HomeContent from "./HomeContent";
+import Header from "home/Header";
+import Footer from "home/Footer";
+import CartContent from "./CartContent";
 
 const App = () => (
   <div className="mt-10 text-3xl mx-auto max-w-6xl">
     <Router>
-      <Header />
-    <div className="my-10">
-      <HomeContent />
-    </div>
+    <Header />
+    <CartContent />
     <Footer />
     </Router>
   </div>

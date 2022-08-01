@@ -1,31 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { getProducts, currency } from './products';
+import { getProducts, currency } from "./products";
+import { addToCart, useLoggedIn } from "cart/cart";
 
 export default function HomeContent() {
-    const [products, setProducts] = useState([]);
+  const loggedIn = useLoggedIn();
+  const [products, setProducts] = useState([]);
 
-    console.log('HomeContent');
-    useEffect(() => {
-        getProducts().then((products) => setProducts(products));
-    }, []);
+  useEffect(() => {
+    getProducts().then(setProducts);
+  }, []);
 
-    return (
-        <div className="mt-10 grid grid-cols-4 gap-5">
-            {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg shadow-lg p-5">
-                    <img src={product.image} alt={product.name} />
-                    <div className="mt-3">
-                        <h3 className="text-xl font-bold">{product.name}</h3>
-                        <p className="text-gray-600 text-sm">{product.description}</p>
-                        <p className="text-gray-600 text-sm">{currency.format(product.price)}</p>
-                       
-                    </div>
-                </div>
-            ))}
+  return (
+    <div className="grid grid-cols-4 gap-5">
+      {products.map((product) => (
+        <div key={product.id}>
+          <Link to={`/product/${product.id}`}>
+            <img src={product.image} alt={product.name} />
+          </Link>
+          <div className="flex">
+            <div className="flex-grow font-bold">
+              <Link to={`/product/${product.id}`}>
+                <a>{product.name}</a>
+              </Link>
+            </div>
+            <div className="flex-end">{currency.format(product.price)}</div>
+          </div>
+          <div className="text-sm mt-4">{product.description}</div>
+          {loggedIn && (
+            <div className="text-right mt-2">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded"
+                onClick={() => addToCart(product.id)}
+                id={`addtocart_${product.id}`}
+              >
+                Add to Cart
+              </button>
+            </div>
+          )}
         </div>
-    );
+      ))}
+    </div>
+  );
 }
-
-
-            

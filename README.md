@@ -7,6 +7,8 @@ Jack Herrington created this course.
 
 ## **Notes**
 
+- ctrl+alt+r run curl command
 - npx create-mf-app 
 - remoteEntry.js
 - PORT=3000 npx servor
+- import "remixicon/fonts/remixicon.css";

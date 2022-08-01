@@ -1,38 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { getProductById, currency } from "home/products";
-
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+
+import { getProductById, currency } from "home/products";
+import placeAddToCart from "addtocart/placeAddToCart";
 
 export default function PDPContent() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (id) {
-      getProductById(id).then((product) => setProduct(product));
+      getProductById(id).then(setProduct);
     } else {
       setProduct(null);
     }
   }, [id]);
 
-  if (!product.id) return null;
+  const addToCart = useRef(null);
+
+  useEffect(() => {
+    if (addToCart.current) {
+      placeAddToCart(addToCart.current, product.id);
+    }
+  }, [product]);
+
+  if (!product) return null;
+
   return (
-    <div className="mt-10 grid grid-cols-2 gap-5 bg-white rounded-lg shadow-lg">
-      <div key={product.id} className="p-5">
+    <div className="grid grid-cols-2 gap-5">
+      <div>
         <img src={product.image} alt={product.name} />
       </div>
-      <div className="bp-5">
-        <div className="mt-3">
-          <h3 className="text-xl font-bold">{product.name}</h3>
-          <p className="text-gray-600 text-sm">{product.description}</p>
-
-          <p className="text-gray-600 text-sm">
+      <div>
+        <div className="flex">
+          <h1 className="font-bold text-3xl flex-grow">{product.name}</h1>
+          <div className="font-bold text-3xl flex-end">
             {currency.format(product.price)}
-          </p>
+          </div>
         </div>
-        <div className="mt-3">
-          <p className="text-gray-600 text-sm">{product.longDescription}</p>
-        </div>
+        <div ref={addToCart}></div>
+        <div className="mt-10">{product.description}</div>
+        <div className="mt-10">{product.longDescription}</div>
       </div>
     </div>
   );
