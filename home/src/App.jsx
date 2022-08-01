@@ -6,19 +6,6 @@ import "./index.scss";
 import "tailwindcss/dist/tailwind.min.css";
 import "remixicon/fonts/remixicon.css";
 
-import Footer from "./Footer";
-import Header from "./Header";
-import HomeContent from "./HomeContent";
+import MainLayout from "./MainLayout";
 
-const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <Router>
-      <Header />
-    <div className="my-10">
-      <HomeContent />
-    </div>
-    <Footer />
-    </Router>
-  </div>
-);
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<MainLayout />, document.getElementById("app"));
